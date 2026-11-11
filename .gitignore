@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+/node_modules
+client/node_modules/
+server/node_modules/
+backend/node_modules/
+frontend/node_modules/
+.pnp
+.pnp.js
+
+# Production / Build Outputs
+/build/
+/dist/
+client/build/
+frontend/build/
+client/dist/
+frontend/dist/
+.parcel-cache/
+.next/
+out/
+
+# Environment Variables & Secrets (CRITICAL to ignore)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.passport.js
+credentials.json
+
+# Debugging and Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+logs/
+
+# IDEs, Editors, and Tooling
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
