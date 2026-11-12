@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const Captain = require('../models/captainModel');
 const Admin = require('../models/adminModel');
+const getJwtSecret = require('../config/jwt');
 
 // Protect routes with JWT authentication
 const protect = asyncHandler(async (req, res, next) => {
@@ -14,8 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
     ) {
         try {
             token = req.headers.authorization.split(' ')[1];
-            const secret = process.env.JWT_SECRET || process.env.JWT_SECRET_KEY || 'ridego_jwt_secret_key_2026';
-            const decoded = jwt.verify(token, secret);
+            const decoded = jwt.verify(token, getJwtSecret());
 
             // Attempt to resolve User, Captain, or Admin
             let user = await User.findById(decoded.id).select('-password');

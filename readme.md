@@ -124,6 +124,21 @@ Ridego/
 
 ## 3. How to Run the Application
 
+### Deploy to Vercel with MongoDB Atlas
+
+This repository is configured as a single Vercel project: Vercel builds the Vite frontend and serves the Express API as a serverless function. The frontend calls the API on the same domain.
+
+1. Create a MongoDB Atlas cluster and database user. In Atlas **Network Access**, allow Vercel's outbound connections. Standard Vercel functions do not have a fixed outbound IP; use Vercel Static IPs where available, or allow `0.0.0.0/0` and protect the cluster with a strong, least-privilege database user.
+2. Copy the Atlas connection string and replace its username, password, and cluster host. URL-encode special characters in the database password.
+3. Import this repository into Vercel and set the project **Root Directory** to the repository root. The root `vercel.json` configures the frontend build, API function, and SPA routes.
+4. In Vercel **Settings → Environment Variables**, add:
+   - `MONGO_URI`: the Atlas connection string, including the database name (for example `ridego`).
+   - `JWT_SECRET`: a unique, long random secret. Do not reuse the example/local value.
+   - `NODE_ENV`: `production`.
+5. Redeploy after setting the variables. Verify the deployment at `/api/health`, then test registration/login and a page refresh on a nested frontend route.
+
+Do not commit production credentials or put MongoDB/JWT secrets in `frontend` variables. If deploying a preview environment, configure its variables and Atlas network access too.
+
 ### 1. Start MongoDB
 Ensure MongoDB is running locally:
 ```bash

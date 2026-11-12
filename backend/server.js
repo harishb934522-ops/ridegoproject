@@ -10,7 +10,6 @@ const couponRoutes = require('./routes/couponRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
@@ -47,7 +46,12 @@ app.use(errorHandler);
 
 if (require.main === module) {
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`🚀 RideGo Server running on port ${PORT}`));
+    connectDB()
+        .then(() => app.listen(PORT, () => console.log(`🚀 RideGo Server running on port ${PORT}`)))
+        .catch((error) => {
+            console.error(`❌ MongoDB Connection Error: ${error.message}`);
+            process.exitCode = 1;
+        });
 }
 
 module.exports = app;

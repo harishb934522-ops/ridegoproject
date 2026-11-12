@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const getJwtSecret = require('../config/jwt');
 
 // Middleware to check JWT token
 const verifyToken = (req, res, next) => {
@@ -10,8 +11,7 @@ const verifyToken = (req, res, next) => {
     }
 
     try {
-        const secret = process.env.JWT_SECRET || process.env.JWT_SECRET_KEY || 'ridego_jwt_secret_key_2026';
-        const decoded = jwt.verify(token, secret);
+        const decoded = jwt.verify(token, getJwtSecret());
         req.user = decoded.id;
         next();
     } catch (err) {
